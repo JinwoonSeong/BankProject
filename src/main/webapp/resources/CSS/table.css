@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+table, th, td {
+	border: 2px solid #D4EDEE;
+	border-collapse: collapse;
+	color: #555;
+}
+
+table {
+	width: 100%
+}
+
+th, td {
+	padding: 5px;
+}
+
+.list tr:nth-child(2n) {
+	background-color: #F7F9FC;
+}
+
+.topMenu th, .topMenu td {
+	padding: 0px;
+} 
+
+td a:link, td a:visited {
+	color: #718aBE;
+	text-decoration: none;
+}
+
+td a:hover {
+	text-decoration: underline;
+}
+
+table th {
+	background-color: #E5EDF5;
+	color: #2F76A3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

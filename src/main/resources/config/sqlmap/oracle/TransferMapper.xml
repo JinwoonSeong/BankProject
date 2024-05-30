@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.TransferDAO">
+
+    <!-- 출금 계좌에서 잔액 감소 -->
+    <update id="decreaseBalance" parameterType="kr.ac.kopo.transaction.vo.TransactionVO">
+        UPDATE account
+        SET account_MONEY = account_MONEY - #{amount}
+        WHERE account_NUM = #{from_Account}
+    </update>
+
+    <!-- 입금 계좌에서 잔액 증가 -->
+    <update id="increaseBalance" parameterType="kr.ac.kopo.transaction.vo.TransactionVO">
+        UPDATE account
+        SET account_MONEY = account_MONEY + #{amount}
+        WHERE account_NUM = #{to_Account}
+    </update>
+
+</mapper>
