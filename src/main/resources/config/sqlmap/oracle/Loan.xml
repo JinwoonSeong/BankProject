@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.LoanDAO">
+
+    <insert id="insertLoan" parameterType="kr.ac.kopo.loan.vo.LoanVO">
+        INSERT INTO LOAN (Loan_Num, customer_id, Borrower, Loan_Type, account_id, Loan_Amount, Loan_date, Redemption_date, Loan_Interest_rate, Repayment_status)
+        VALUES (#{Loan_num}, #{customerId}, #{borrower}, #{loan_type}, #{accountId}, #{amount}, #{startDate}, #{endDate}, #{interestRate}, #{Repayment_status})
+    </insert>
+
+    <select id="findById" parameterType="string" resultType="kr.ac.kopo.loan.vo.LoanVO">
+        SELECT * FROM LOAN WHERE customer_id = #{customerId}
+    </select>
+    
+    <update id="updateAccountBalance" parameterType="map">
+        UPDATE ACCOUNT
+        SET ACCOUNT_MONEY = ACCOUNT_MONEY + #{amount}
+        WHERE ACCOUNT_NUM = #{accountId}
+    </update>
+
+</mapper>

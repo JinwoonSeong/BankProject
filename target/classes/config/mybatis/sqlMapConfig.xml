@@ -8,5 +8,4 @@
 <!-- 		<typeAlias type="kr.ac.kopo.bank.vo.BankVO"  alias="bankVO"/> -->
 		<typeAlias type="kr.ac.kopo.member.vo.MemberVO" alias="memberVO"/>
 	</typeAliases>
-	
 </configuration>

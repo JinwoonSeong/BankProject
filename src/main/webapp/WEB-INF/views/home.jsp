@@ -28,7 +28,7 @@
                         <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/myaccount">내 계좌</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.jsp">계좌 개설</a></li>
                         <li class="nav-item"><a class="nav-link" href="savings.jsp">적금</a></li>
-                        <li class="nav-item"><a class="nav-link" href="loans.jsp">대출</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/loan/apply">대출</a></li>
                     </ul>
                 </div>
             </div>
@@ -68,8 +68,17 @@
                             <i class="bi bi-arrow-right"></i>
                         </a>
                     </div>
-                	<div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="col-lg-4 mb-5 mb-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-star"></i></div>
+                        <h2 class="h4 fw-bolder">내 계좌</h2>
+                        <p>고객님 어서오세요!</p>
+                        <a class="text-decoration-none" href="account.jsp">
+                            내 계좌 확인하러 가기!
+                            <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                	<div class="col-lg-4 mb-5 mb-lg-0">
+                        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi-wifi"></i></div>
                         <h2 class="h4 fw-bolder">계좌이체</h2>
                         <p>계좌이체하기</p>
                         <a class="text-decoration-none" href="${ pageContext.request.contextPath }/transfer">
@@ -99,7 +108,7 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-toggles2"></i></div>
                         <h2 class="h4 fw-bolder">대출</h2>
                         <p>JW은행이 당신의 희망을 이루도록 돕겠습니다! JW은행에 대출 상품을 확인해보세요!</p>
-                        <a class="text-decoration-none" href="#!">
+                        <a class="text-decoration-none" href="${ pageContext.request.contextPath }/loan/apply">
                             대출 하러가기!!
                             <i class="bi bi-arrow-right"></i>
                         </a>

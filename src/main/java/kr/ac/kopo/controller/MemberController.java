@@ -72,6 +72,7 @@ public class MemberController {
     public String viewMyPage(HttpSession session, Model model) throws Exception {
         // 로그인한 사용자의 ID를 세션에서 가져옵니다.
         MemberVO m = (MemberVO) session.getAttribute("userVO");
+        System.out.println("씨발거"+ m);
         
         // ID에 해당하는 회원 정보를 가져옵니다.
         MemberVO member = memberService.getMemberById(m.getCustomer_id());

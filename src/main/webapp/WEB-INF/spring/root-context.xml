@@ -22,5 +22,4 @@
     	<constructor-arg ref="sqlSessionFactory" />
     </bean>
     
-  
-</beans>
+ </beans>

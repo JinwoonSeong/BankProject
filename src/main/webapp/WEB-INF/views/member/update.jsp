@@ -1,5 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="kr.ac.kopo.member.vo.MemberVO" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page import="kr.ac.kopo.account.dao.RandomAccountNumberGenerator" %>
+    <%
+    // 로그인 여부 확인
+    MemberVO userVO = (MemberVO) session.getAttribute("userVO");
+    String customerId = null;
+    if (userVO != null) {
+        customerId = userVO.getCustomer_id();
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,11 +48,11 @@
                         
                         <form action="${pageContext.request.contextPath}/member/update" method="post" onsubmit="return validateForm()" id="contactForm" data-sb-form-api-token="API_TOKEN">
                             <div class="form-floating mb-3">
-                                <input class="form-control" type="text" id="customer_id" name="customer_id" required pattern="[a-zA-Z0-9]+" title="아이디는 영문자와 숫자로만 입력해주세요." />
+                                <input class="form-control" type="text" id="customer_id" name="customer_id" value="<%= customerId %>" required pattern="[a-zA-Z0-9]+" title="아이디는 영문자와 숫자로만 입력해주세요." />
                                 <label for="customer_id">고객님의 아이디</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input class="form-control" type="text" id="customer_name" name="customer_name" required pattern="[가-힣]+" title="이름은 한글로만 입력해주세요." />
+                                <input class="form-control" type="text" id="customer_name" name="customer_name"  value="<%= userVO.getCustomer_name() %>" required pattern="[가-힣]+" title="이름은 한글로만 입력해주세요." />
                                 <label for="name">고객님의 이름</label>
                             </div>
                             <div class="form-floating mb-3">
