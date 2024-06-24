@@ -20,14 +20,18 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container px-5">
                 <a class="navbar-brand" href="#!">JW은행</a>
+                <div>
+                <a class="navbar-brand" href="${ pageContext.request.contextPath }/managerLogin">관리자 로그인</a>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">메인페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/myaccount">내 계좌</a></li>
-                        <li class="nav-item"><a class="nav-link" href="account.jsp">계좌 개설</a></li>
-                        <li class="nav-item"><a class="nav-link" href="savings.jsp">적금</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/accounts">내 계좌</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/transfer">계좌이체</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/accountRegister">계좌 개설</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/savingsAccountRegister">적금</a></li>
                         <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/loan/apply">대출</a></li>
                     </ul>
                 </div>
@@ -72,7 +76,7 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-star"></i></div>
                         <h2 class="h4 fw-bolder">내 계좌</h2>
                         <p>고객님 어서오세요!</p>
-                        <a class="text-decoration-none" href="account.jsp">
+                        <a class="text-decoration-none" href="${ pageContext.request.contextPath }/accounts">
                             내 계좌 확인하러 가기!
                             <i class="bi bi-arrow-right"></i>
                         </a>
@@ -99,7 +103,7 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-building"></i></div>
                         <h2 class="h4 fw-bolder">적금</h2>
                         <p>더 나은 미래를 위한 적금 생활 JW은행의 좋은 상품과 함께 시작해보세요!</p>
-                        <a class="text-decoration-none" href="savings.jsp">
+                        <a class="text-decoration-none" href="${ pageContext.request.contextPath }/savingsAccountRegister">
                             적금 하러가기!!
                             <i class="bi bi-arrow-right"></i>
                         </a>

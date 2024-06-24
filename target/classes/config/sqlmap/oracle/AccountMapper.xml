@@ -9,5 +9,73 @@
         INSERT INTO ACCOUNT (account_num, customer_id, name, account_password)
         VALUES (#{account_num}, #{customer_id}, #{name}, #{account_password})
     </insert>
+    
+    <!-- 계좌 번호로 계좌 조회 -->
+    <select id="findAccountByNumber" parameterType="String" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT account_num, customer_id, name, account_password, account_money, open_date, bank_code
+        FROM account
+        WHERE account_num = #{account_num}
+    </select>
+
+    <!-- 계좌 업데이트 -->
+    <update id="updateAccount" parameterType="kr.ac.kopo.account.vo.AccountVO">
+        UPDATE account
+        SET customer_id = #{customer_id},
+            name = #{name},
+            account_password = #{account_password},
+            account_money = #{account_money},
+            open_date = #{open_date},
+            bank_code = #{bank_code}
+        WHERE account_num = #{account_num}
+    </update>
+
+    <!-- 입금 처리 (계좌 잔액 업데이트) -->
+    <update id="deposit" parameterType="map">
+        UPDATE account
+        SET account_money = account_money + #{amount}
+        WHERE account_num = #{account_num}
+    </update>
+    
+    <select id="findById" parameterType="string" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM ACCOUNT WHERE account_num = #{account_num}
+    </select>
+
+    <update id="update" parameterType="kr.ac.kopo.account.vo.AccountVO">
+        UPDATE ACCOUNT
+        SET account_money = #{account_money}, account_password = #{account_password} -- 필요한 다른 필드도 추가하세요
+        WHERE account_num = #{account_num}
+    </update>
+    
+    <select id="getAllAccounts" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM account
+    </select>
+
+    <select id="getAccountById" parameterType="string" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM account WHERE account_num = #{account_num}
+    </select>
+
+    <select id="getTransactionsByAccountId" parameterType="string" resultType="kr.ac.kopo.transactiondetail.vo.TransactionDetailVO">
+        SELECT transaction_id AS transactionId,
+           account_num AS accountNum,
+           transaction_type AS transaction_type,
+           amount,
+           transaction_date AS transactionDate,
+           depositor_name AS depositorName,
+           to_account AS toAccount,
+           from_account AS fromAccount FROM Transaction_details WHERE account_num = #{account_num}
+    </select>
+    <select id="getAccountsByCustomerId" parameterType="java.lang.String" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM account WHERE customer_id = #{customerId, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAccountByIdAndCustomerId" parameterType="map" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM account 
+        WHERE account_num = #{account_Num} 
+        AND customer_id = #{customer_Id}
+    </select>
+    
+    <delete id="closeAccount" parameterType="string">
+        DELETE FROM account WHERE account_num = #{account_Num}
+    </delete>
 
 </mapper>

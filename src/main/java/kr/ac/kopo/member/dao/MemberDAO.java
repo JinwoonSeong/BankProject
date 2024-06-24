@@ -11,4 +11,7 @@ public interface MemberDAO {
 	 MemberVO getMemberById(String id) throws Exception;
 	 
      void updateMember(MemberVO member) throws Exception;
+     
+     MemberVO findById(String userId);
+     void delete(String userId);
 }

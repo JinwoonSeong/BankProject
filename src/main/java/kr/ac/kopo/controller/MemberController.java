@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -99,6 +100,30 @@ public class MemberController {
         System.out.println("살려줘");
         // mypage.jsp 페이지로 리다이렉트합니다.
         return "redirect:/mypage";
+    }
+    
+    @GetMapping("/deleteAccount")
+    public String deleteAccountForm() {
+        return "member/deleteAccount";
+    }
+
+    @PostMapping("/deleteAccount")
+    public String deleteAccount(@RequestParam("userId") String userId, 
+                                @RequestParam("password") String password, 
+                                Model model) {
+        try {
+            boolean success = memberService.deleteAccount(userId, password);
+            if (success) {
+                model.addAttribute("successMessage", "회원탈퇴가 정상적으로 완료되었습니다.");
+                return "redirect:/logout"; // Assuming there's a logout mechanism
+            } else {
+                model.addAttribute("errorMessage", "사용자 ID 또는 암호를 잘못되었습니다.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Error processing account deletion.");
+        }
+        return "member/deleteAccount";
     }
 }
 

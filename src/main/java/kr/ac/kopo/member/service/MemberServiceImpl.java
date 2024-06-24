@@ -32,4 +32,14 @@ public class MemberServiceImpl implements MemberService {
     public void updateMember(MemberVO member) throws Exception {
         memberDao.updateMember(member);
     }
+    
+    @Override
+    public boolean deleteAccount(String userId, String password) {
+        MemberVO user = memberDao.findById(userId);
+        if (user != null && user.getPassword().equals(password)) {
+        	memberDao.delete(userId);
+            return true;
+        }
+        return false;
+    }
 }

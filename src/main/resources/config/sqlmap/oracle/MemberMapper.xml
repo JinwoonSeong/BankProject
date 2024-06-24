@@ -12,8 +12,8 @@
     
     <!-- 회원가입 -->
     <insert id="signUp" parameterType="memberVO">
-        INSERT INTO Customers (customer_id, password, customer_name, phone_number, email, address)
-        VALUES (#{customer_id}, #{password}, #{customer_name}, #{phone_number}, #{email}, #{address})
+        INSERT INTO Customers (customer_id, password, customer_name, ssn, phone_number, email, address)
+        VALUES (#{customer_id}, #{password}, #{customer_name}, #{ssn}, #{phone_number}, #{email}, #{address})
     </insert>
     
      <select id="getMemberById" parameterType="String" resultType="memberVO">
@@ -29,4 +29,12 @@
 		    address = #{address}
 		WHERE customer_id = #{customer_id}
     </update>
+    
+    <select id="findById" parameterType="string" resultType="memberVO">
+        SELECT * FROM Customers WHERE customer_id = #{customer_id}
+    </select>
+
+    <delete id="delete" parameterType="string">
+        DELETE FROM Customers WHERE customer_id = #{customer_id}
+    </delete>
 </mapper>

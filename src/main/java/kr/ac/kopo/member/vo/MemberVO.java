@@ -4,7 +4,8 @@ public class MemberVO {
     private String customer_id;
     private String password;
     private String customer_name;
-    private String phone_number;
+    private String ssn;
+	private String phone_number;
     private String email;
     private String type;
     private String address;
@@ -14,7 +15,7 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [customer_id=" + customer_id + ", password=" + password + ", customer_name=" + customer_name
+		return "MemberVO [customer_id=" + customer_id + ", password=" + password + ", customer_name=" + customer_name + ", ssn=" + ssn
 				+ ", phone_number=" + phone_number + ", email=" + email + ", type=" + type + ", address=" + address
 				+ "]";
 	}
@@ -35,6 +36,12 @@ public class MemberVO {
 	}
 	public void setCustomer_name(String customer_name) {
 		this.customer_name = customer_name;
+	}
+	public String getSsn() {
+		return ssn;
+	}
+	public void setSsn(String ssn) {
+		this.ssn = ssn;
 	}
 	public String getPhone_number() {
 		return phone_number;

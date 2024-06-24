@@ -18,6 +18,7 @@
                         <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/">메인페이지</a></li>
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="mypage">마이페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="myaccount.jsp">내 계좌</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/transfer">계좌이체</a></li>
                         <li class="nav-item"><a class="nav-link" href="account.jsp">계좌 개설</a></li>
                         <li class="nav-item"><a class="nav-link" href="savings.jsp">적금</a></li>
                         <li class="nav-item"><a class="nav-link" href="loans.jsp">대출</a></li>
@@ -50,6 +51,7 @@
         </tr>
     </table>
     <a href="${ pageContext.request.contextPath }/member/update" class="btn btn-primary">수정하기</a>
+    <a href="${ pageContext.request.contextPath }/deleteAccount" class="btn btn-primary">회원탈퇴하기</a>
 </div>
      
 

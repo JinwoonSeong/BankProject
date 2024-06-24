@@ -17,6 +17,7 @@
                         <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/">메인페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="myaccount">내 계좌</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/transfer">계좌이체</a></li>
                         <li class="nav-item"><a class="nav-link" href="account">계좌 개설</a></li>
                         <li class="nav-item"><a class="nav-link" href="savings">적금</a></li>
                         <li class="nav-item"><a class="nav-link" href="loans">대출</a></li>
@@ -57,6 +58,11 @@
                                 <label for="name">이름</label>
                             </div>
                             
+                             <div class="form-floating mb-3">
+                                <input class="form-control" type="text" id="ssn" name="ssn" required pattern="^\d{6}-\d{7}$" title="하이픈은 포함아여 주민번호 13자리를 입력해주세요!" />
+                                <label for="name">주민번호</label>
+                            </div>
+                            
                             <div class="form-floating mb-3">
                                 <input class="form-control" type="text" id="phone_number" name="phone_number" required pattern="010-\d{4}-\d{4}" title="연락처는 010-숫자4자리-숫자4자리 형식으로 입력해주세요." />
                                 <label for="phone">전화번호</label>
@@ -88,7 +94,10 @@
                     </div>
                 </div>
             </div>
-        </section> 
+        </section>
+        <footer class="py-5 bg-dark">
+            <div class="container px-5"><p class="m-0 text-center text-white">&copy; 2024 Bank. All rights reserved.</p></div>
+        </footer>
 <script>
     function validatePassword() {
         var passwordInput = document.getElementById("password");

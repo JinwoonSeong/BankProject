@@ -3,6 +3,7 @@ package kr.ac.kopo.member.dao;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import kr.ac.kopo.member.vo.MemberVO;
 
@@ -35,5 +36,19 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public void updateMember(MemberVO member) throws Exception {
         sqlSession.update("dao.MemberDAO.updateMember", member);
+    }
+    
+    @Transactional
+	public int update_mypage(MemberVO member) throws Exception{
+		return sqlSession.update("member.update_mypage", member);
+	}
+    
+    public MemberVO findById(String userId) {
+        return sqlSession.selectOne("dao.MemberDAO.findById", userId);
+    }
+
+    @Override
+    public void delete(String userId) {
+        sqlSession.delete("dao.MemberDAO.delete", userId);
     }
 }

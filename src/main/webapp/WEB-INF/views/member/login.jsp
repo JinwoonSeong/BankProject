@@ -42,6 +42,7 @@
                         <li class="nav-item"><a class="nav-link" href="mypage">마이페이지</a></li>
                         <li class="nav-item"><a class="nav-link" href="myaccount">내 계좌</a></li>
                         <li class="nav-item"><a class="nav-link" href="account">계좌 개설</a></li>
+                        <li class="nav-item"><a class="nav-link" href="${ pageContext.request.contextPath }/transfer">계좌이체</a></li>
                         <li class="nav-item"><a class="nav-link" href="savings">적금</a></li>
                         <li class="nav-item"><a class="nav-link" href="loans">대출</a></li>
                     </ul>
@@ -74,7 +75,10 @@
                     </div>
                 </div>
             </div>
-        </section> 
+        </section>
+        <footer class="py-5 bg-dark">
+            <div class="container px-5"><p class="m-0 text-center text-white">&copy; 2024 Bank. All rights reserved.</p></div>
+        </footer>
 
                             
 

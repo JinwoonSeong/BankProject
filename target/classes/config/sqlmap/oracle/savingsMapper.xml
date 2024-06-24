@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.SavingsAccountDAO">
+
+    <!-- 모든 적금 계좌 조회 -->
+    <select id="findAllSavingsAccounts" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT savings_account_num, account_holder, deposit_type, amount, interest_rate
+        FROM Installment_savings
+    </select>
+
+    <!-- 적금 계좌 개설 SQL 문 -->
+    <insert id="savingsAccountRegister" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        INSERT INTO Installment_savings (savings_account_num, customer_id, account_holder, savings_account_password, deposit_type, amount)
+        VALUES (#{savings_account_num}, #{customer_id}, #{account_holder}, #{savings_account_password}, #{deposit_type}, #{amount})
+    </insert>
+
+    <!-- 적금 입금 SQL 문 -->
+    <update id="savingsDeposit">
+        UPDATE Installment_savings
+        SET amount = amount + #{amount}
+        WHERE savings_account_num = #{savings_account_num}
+    </update>
+
+    <!-- 적금 계좌 조회 SQL 문 -->
+    <select id="findSavingsAccountByNumber" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM Installment_savings
+        WHERE savings_account_num = #{savings_account_num}
+    </select>
+
+    <!-- 적금 계좌 업데이트 SQL 문 -->
+    <update id="updateSavingsAccount" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        UPDATE Installment_savings
+        SET amount = #{amount}, interest_rate = #{interest_rate}, deposit_type = #{deposit_type}
+        WHERE savings_account_num = #{savings_account_num}
+    </update>
+
+    <!-- 적금 계좌 삭제 SQL 문 -->
+    <delete id="deleteSavings" parameterType="String">
+        DELETE FROM Installment_savings WHERE deposit_type = #{deposit_type}
+    </delete>
+</mapper>

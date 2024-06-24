@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.FinancialProductDAO">
+
+    <!-- 적금 상품 추가 SQL 문 -->
+    <insert id="insertProduct" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        INSERT INTO FinancialProducts (product_id, product_name, product_description, interest_rate)
+        VALUES (#{productId}, #{productName}, #{productDescription}, #{interestRate})
+    </insert>
+
+    <!-- 적금 상품 전체 조회 SQL 문 -->
+    <select id="getAllProducts" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM FinancialProducts
+    </select>
+
+    <!-- 적금 상품 수정 SQL 문 -->
+    <update id="updateProduct" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        UPDATE FinancialProducts
+        SET product_name = #{productName}, product_description = #{productDescription}, interest_rate = #{interestRate}
+        WHERE product_id = #{productId}
+    </update>
+
+    <!-- 적금 상품 삭제 SQL 문 -->
+    <delete id="deleteProduct" parameterType="String">
+        DELETE FROM FinancialProducts WHERE product_id = #{productId}
+    </delete>
+</mapper>

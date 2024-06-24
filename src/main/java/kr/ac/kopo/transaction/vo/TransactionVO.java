@@ -5,7 +5,13 @@ import java.sql.Date;
 
 public class TransactionVO {
 	private int transactionId;
+	private String account_Num;
+	private double amount;
+	private String transactionType;
+	private Date transactionDate;
+	private String depositorName;
 	private String from_Account;
+	private String to_Account;
 	public TransactionVO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -46,10 +52,10 @@ public class TransactionVO {
 	public void setTransactionType(String transactionType) {
 		this.transactionType = transactionType;
 	}
-	public BigDecimal getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public Date getTransactionDate() {
@@ -64,11 +70,5 @@ public class TransactionVO {
 	public void setDepositorName(String depositorName) {
 		this.depositorName = depositorName;
 	}
-	private String to_Account;
-    private String account_Num;
-    private String transactionType;
-    private BigDecimal amount;
-    private Date transactionDate;
-    private String depositorName;
    
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.TransactionDetailDAO">
+
+    <insert id="insertTransaction" parameterType="kr.ac.kopo.transactiondetail.vo.TransactionDetailVO">
+        INSERT INTO Transaction_details (
+            transaction_id,
+            account_NUM,
+            transaction_type,
+            amount,
+            transaction_date,
+            Depositor_name,
+            to_account,
+            from_account
+        ) VALUES (
+            #{transactionId},
+            #{accountNum},
+            #{transaction_type},
+            #{amount},
+            #{transactionDate},
+            #{depositorName},
+            #{toAccount, jdbcType=VARCHAR},
+            #{fromAccount, jdbcType=VARCHAR}
+        )
+    </insert>
+
+</mapper>

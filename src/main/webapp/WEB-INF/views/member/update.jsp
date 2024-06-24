@@ -56,6 +56,10 @@
                                 <label for="name">고객님의 이름</label>
                             </div>
                             <div class="form-floating mb-3">
+                                <input class="form-control" type="text" id="ssn" name="ssn"  value="<%= userVO.getSsn() %>" required pattern="[가-힣]+" title="이름은 한글로만 입력해주세요." />
+                                <label for="name">고객님의 주민번호</label>
+                            </div>
+                            <div class="form-floating mb-3">
                                 <input class="form-control" ype="email" id="email" name="email" required />
                                 <label for="email">수정할 이메일</label>
                             </div>
@@ -80,6 +84,9 @@
                 </div>
             </div>
         </section> 
+        <footer class="py-5 bg-dark">
+            <div class="container px-5"><p class="m-0 text-center text-white">&copy; 2024 Bank. All rights reserved.</p></div>
+        </footer>
 <script>
     function validatePassword() {
         var passwordInput = document.getElementById("password");

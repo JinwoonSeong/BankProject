@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ManagerDAO">
+ 	<!-- 로그인 -->
+    <select id="login" parameterType="kr.ac.kopo.manager.vo.ManagerVO" resultType="kr.ac.kopo.manager.vo.ManagerVO">
+        SELECT * FROM managerAccount
+        WHERE id = #{id} AND password = #{password}
+    </select>
+    
+    <!-- 회원 정보 조회 -->
+    <select id="getAllAccounts" resultType="kr.ac.kopo.account.vo.AccountVO">
+        SELECT * FROM account
+    </select>
+</mapper>
