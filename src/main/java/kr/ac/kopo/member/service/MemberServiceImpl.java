@@ -23,6 +23,11 @@ public class MemberServiceImpl implements MemberService {
     }
     
     @Override
+	public boolean checkId(String id) throws Exception {
+		return memberDao.getMemberById(id) != null ? false : true;
+	}
+    
+    @Override
     public MemberVO getMemberById(String id) throws Exception {
     	System.out.println("service");
         return memberDao.getMemberById(id);

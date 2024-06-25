@@ -1,43 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="dao.SavingsAccountDAO">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <!-- 모든 적금 계좌 조회 -->
+<mapper namespace="kr.ac.kopo.savings.dao.SavingsAccountDAO">
+<insert id="savingsAccountRegister" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+    INSERT INTO INSTALLMENT_SAVINGS (savings_account_num, customer_id, savings_account_password, deposit_type, amount, product_number)
+    VALUES (#{savings_account_num}, #{customer_id}, #{savings_account_password}, #{deposit_type}, #{amount}, #{product_number})
+</insert>
+
+    
     <select id="findAllSavingsAccounts" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
-        SELECT savings_account_num, account_holder, deposit_type, amount, interest_rate
-        FROM Installment_savings
+        SELECT * FROM INSTALLMENT_SAVINGS
+    </select>
+    
+    <select id="findSavingsAccountByNumber" parameterType="String" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM INSTALLMENT_SAVINGS WHERE savings_account_num = #{savings_account_num}
+    </select>
+    
+    <update id="savingsDeposit" parameterType="map">
+        UPDATE INSTALLMENT_SAVINGS SET amount = amount + #{amount} WHERE savings_account_num = #{savings_account_num}
+    </update>
+    
+    <insert id="createSavings" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        INSERT INTO INSTALLMENT_SAVINGS (deposit_type, interest_rate, product_number)
+        VALUES (#{deposit_type}, #{interest_rate},#{product_number})
+    </insert>
+    <!-- resources/kr/ac/kopo/savings/dao/SavingsAccountMapper.xml -->
+    
+	<update id="updateSavingsAccount" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+	    UPDATE installment_savings 
+	    SET deposit_type = #{deposit_type}, 
+	        interest_rate = #{interest_rate}
+	    WHERE deposit_type = #{deposit_type}
+	</update>
+
+
+    <!-- 다른 SQL 매핑들... -->
+    
+    <!-- 적금 기능, 시간에 따라 이자율에 따른 금액 증가 -->
+	<update id="updateAllSavingsAccounts">
+	    UPDATE INSTALLMENT_SAVINGS
+	    SET amount = amount * (1 + interest_rate / 365)
+	</update>
+
+    <delete id="deleteSavings" parameterType="String">
+        DELETE FROM INSTALLMENT_SAVINGS WHERE deposit_type = #{deposit_type}
+    </delete>
+    
+    <!-- 적금 상품 종류 가져오기 -->
+    <select id="getAllDepositTypes" resultType="string">
+        SELECT deposit_type
+        FROM installment_savings
+    </select>
+	
+	<!-- 상품 번호 가져오기 -->
+	<select id="getProductNumber" parameterType="string" resultType="int">
+	    SELECT product_number
+	    FROM (
+	        SELECT product_number
+	        FROM installment_savings
+	        WHERE deposit_type = #{depositType}
+	        ORDER BY open_date DESC
+	    )
+	    WHERE ROWNUM = 1
+	</select>
+
+    <select id="isAccountNumberExists" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM installment_savings
+        WHERE savings_account_num = #{accountNumber}
+    </select>
+    
+    <select id="getAccountsByCustomerId" parameterType="java.lang.String" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM installment_savings WHERE customer_id = #{customer_id, jdbcType=VARCHAR}
+    </select>
+    
+    <select id="findByAccountNum" parameterType="string" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM installment_savings WHERE savings_account_num = #{savings_account_num, jdbcType=VARCHAR}
+    </select>
+    
+    <!-- 계좌 정보 조회 -->
+    <select id="getAccountById" parameterType="String" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
+        SELECT * FROM installment_savings WHERE savings_account_num = #{savings_account_num}
     </select>
 
-    <!-- 적금 계좌 개설 SQL 문 -->
-    <insert id="savingsAccountRegister" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
-        INSERT INTO Installment_savings (savings_account_num, customer_id, account_holder, savings_account_password, deposit_type, amount)
-        VALUES (#{savings_account_num}, #{customer_id}, #{account_holder}, #{savings_account_password}, #{deposit_type}, #{amount})
+    <!-- 계좌 삭제 -->
+    <delete id="deleteAccount" parameterType="String">
+        DELETE FROM installment_savings WHERE savings_account_num = #{savings_account_num}
+    </delete>
+
+    <!-- 이체 거래 내역 삽입 -->
+    <insert id="insertTransactionHistory" parameterType="kr.ac.kopo.transactiondetail.vo.TransactionDetailVO">
+        INSERT INTO Transaction_details (
+            transaction_id,
+            account_NUM,
+            transaction_type,
+            amount,
+            transaction_date,
+            Depositor_name,
+            to_account,
+            from_account
+        ) VALUES (
+            #{transactionId},
+            #{account_Num},
+            '입금',
+            #{amount},
+            #{transactionDate},
+            #{depositorName},
+            #{to_Account},
+            #{from_Account}
+        )
     </insert>
 
-    <!-- 적금 입금 SQL 문 -->
-    <update id="savingsDeposit">
-        UPDATE Installment_savings
-        SET amount = amount + #{amount}
-        WHERE savings_account_num = #{savings_account_num}
+    <!-- 잔액 업데이트 -->
+    <update id="updateAccountBalance" parameterType="map">
+        UPDATE account SET account_MONEY = account_MONEY + #{amount} WHERE account_id = #{targetAccountId}
     </update>
-
-    <!-- 적금 계좌 조회 SQL 문 -->
-    <select id="findSavingsAccountByNumber" resultType="kr.ac.kopo.savings.vo.SavingsAccountVO">
-        SELECT * FROM Installment_savings
-        WHERE savings_account_num = #{savings_account_num}
-    </select>
-
-    <!-- 적금 계좌 업데이트 SQL 문 -->
-    <update id="updateSavingsAccount" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
-        UPDATE Installment_savings
-        SET amount = #{amount}, interest_rate = #{interest_rate}, deposit_type = #{deposit_type}
-        WHERE savings_account_num = #{savings_account_num}
-    </update>
-
-    <!-- 적금 계좌 삭제 SQL 문 -->
-    <delete id="deleteSavings" parameterType="String">
-        DELETE FROM Installment_savings WHERE deposit_type = #{deposit_type}
-    </delete>
 </mapper>

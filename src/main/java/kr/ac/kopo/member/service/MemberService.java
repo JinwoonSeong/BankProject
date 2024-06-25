@@ -11,4 +11,6 @@ public interface MemberService {
     MemberVO getMemberById(String id) throws Exception;
     void updateMember(MemberVO member) throws Exception;
     boolean deleteAccount(String userId, String password);
+    
+    boolean checkId(String id) throws Exception;
 }

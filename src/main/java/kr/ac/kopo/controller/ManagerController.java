@@ -43,7 +43,6 @@ public class ManagerController {
         }
     }
 
-    // 새로운 매핑 추가
     @GetMapping("/manager/managerHome")
     public String home() {
         return "manager/managerHome";
@@ -55,9 +54,9 @@ public class ManagerController {
         return "redirect:/";
     }
     
-    @GetMapping("/manager/listAccounts")
+    @GetMapping("/manager/listAccountsForManager")
     public String listAccounts(Model model) {
         model.addAttribute("accounts", accountService.getAllAccounts());
-        return "manager/listAccounts";
+        return "manager/listAccountsForManager";
     }
 }

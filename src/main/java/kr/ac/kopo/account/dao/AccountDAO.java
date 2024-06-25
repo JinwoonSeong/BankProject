@@ -23,6 +23,10 @@ public interface AccountDAO {
 
     AccountVO getAccountByIdAndCustomerId(String accountId, String customerId);
     void closeAccount(String accountId);
+    
+    //계좌번호중복방지 관련 메소드
+    int countByAccountNumber(String accountNumber);
+    int countBySavingsAccountNumber(String accountNumber);
    
     
 }

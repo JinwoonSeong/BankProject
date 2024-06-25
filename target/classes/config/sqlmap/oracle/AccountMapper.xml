@@ -77,5 +77,15 @@
     <delete id="closeAccount" parameterType="string">
         DELETE FROM account WHERE account_num = #{account_Num}
     </delete>
+    
+        <!-- 계좌 번호로 계좌 수 카운트 -->
+    <select id="countByAccountNumber" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM ACCOUNT WHERE account_num = #{accountNumber}
+    </select>
+
+    <!-- 적금 계좌 번호로 계좌 수 카운트 -->
+    <select id="countBySavingsAccountNumber" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM INSTALLMENT_SAVINGS WHERE savings_account_num = #{accountNumber}
+    </select>
 
 </mapper>

@@ -5,7 +5,7 @@
 <mapper namespace="dao.ManagerDAO">
  	<!-- 로그인 -->
     <select id="login" parameterType="kr.ac.kopo.manager.vo.ManagerVO" resultType="kr.ac.kopo.manager.vo.ManagerVO">
-        SELECT * FROM managerAccount
+        SELECT * FROM manager_account
         WHERE id = #{id} AND password = #{password}
     </select>
     

@@ -81,5 +81,15 @@ public class AccountDAOImpl implements AccountDAO {
 	    public void closeAccount(String accountId) {
 	        sqlSession.delete("dao.AccountDAO.closeAccount", accountId);
 	    }
+	    
+	    @Override
+	    public int countByAccountNumber(String accountNumber) {
+	        return sqlSession.selectOne("dao.AccountDAO.countByAccountNumber", accountNumber);
+	    }
+
+	    @Override
+	    public int countBySavingsAccountNumber(String accountNumber) {
+	        return sqlSession.selectOne("dao.AccountDAO.countBySavingsAccountNumber", accountNumber);
+	    }
 
 }

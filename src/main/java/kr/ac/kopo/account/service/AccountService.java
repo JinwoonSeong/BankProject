@@ -14,6 +14,6 @@ public interface AccountService {
     List<TransactionDetailVO> getTransactionsByAccountId(String accountId);
     List<AccountVO> getAccountsByCustomerId(String customerId);
     boolean closeAccount(String accountId, String password);
-
     AccountVO getAccountByIdAndCustomerId(String accountId, String customerId);
+
 }

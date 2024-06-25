@@ -21,7 +21,6 @@
             <div class="container px-5">
                 <a class="navbar-brand" href="#!">JW은행</a>
                 <div>
-                <a class="navbar-brand" href="${ pageContext.request.contextPath }/managerLogin">관리자 로그인</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

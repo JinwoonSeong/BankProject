@@ -7,7 +7,7 @@ public class TransactionDetailVO {
     private int transactionId;
     private String accountNum;
 
-	private int amount;
+	private double amount;
     private String transaction_type;
     private Date transactionDate;
     private String depositorName;
@@ -40,11 +40,11 @@ public class TransactionDetailVO {
         this.transactionId = transactionId;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

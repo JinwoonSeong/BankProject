@@ -30,7 +30,7 @@
     <div class="container px-5 my-5">
         <div class="text-center mb-5">
             <h1 class="fw-bolder">계좌 해지 확인</h1>
-            <p class="lead fw-normal text-muted mb-0">계좌에 잔액이 남아 있습니다. 그래도 해지하시겠습니까?</p>
+            <p class="lead fw-normal text-muted mb-0">계좌에 잔액이 남아 있습니다. 그래도 해지하시겠습니까? 계속 진행 시 계좌에 남아있던 모든 돈은 JW은행으로 귀속됩니다.</p>
         </div>
         <div class="row gx-5 justify-content-center">
             <div class="col-lg-6">

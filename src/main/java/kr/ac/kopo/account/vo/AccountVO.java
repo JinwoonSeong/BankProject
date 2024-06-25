@@ -10,6 +10,13 @@ public class AccountVO {
     private int account_money;
     private Date open_date;
     private String bank_code;
+    private int productNumber;
+	public int getProductNumber() {
+		return productNumber;
+	}
+	public void setProductNumber(int productNumber) {
+		this.productNumber = productNumber;
+	}
 	public String getAccount_num() {
 		return account_num;
 	}
