@@ -61,6 +61,22 @@
                                     <i class="bi bi-check text-primary"></i>
                                     ${installment_savings.savings_account_num}
                                 </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-primary"></i>
+                                    <strong>상품명</strong>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-primary"></i>
+                                    ${installment_savings.deposit_type}
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-primary"></i>
+                                    <strong>이자율</strong>
+                                </li>
+                                <li class="mb-2">
+                                    <i class="bi bi-check text-primary"></i>
+                                    ${installment_savings.interest_rate}
+                                </li>
                             </ul>
                             <div class="d-grid">
                                 <a class="btn btn-outline-primary" href="${pageContext.request.contextPath}/savings/${installment_savings.savings_account_num}">거래 내역</a>

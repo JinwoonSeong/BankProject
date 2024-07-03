@@ -11,7 +11,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Autowired
     private MemberDAO memberDao;
-    
+
     @Override
     public MemberVO login(MemberVO member) throws Exception {
         return memberDao.login(member);
@@ -21,28 +21,30 @@ public class MemberServiceImpl implements MemberService {
     public void signUp(MemberVO member) throws Exception {
         memberDao.signUp(member);
     }
-    
+
     @Override
-	public boolean checkId(String id) throws Exception {
-		return memberDao.getMemberById(id) != null ? false : true;
-	}
-    
+    public boolean checkId(String id) throws Exception {
+        return memberDao.getMemberById(id) != null ? false : true;
+    }
+
     @Override
     public MemberVO getMemberById(String id) throws Exception {
-    	System.out.println("service");
-        return memberDao.getMemberById(id);
+        System.out.println("getMemberById: " + id); // 로그 추가
+        MemberVO member = memberDao.getMemberById(id);
+        System.out.println("Member: " + member); // 로그 추가
+        return member;
     }
 
     @Override
     public void updateMember(MemberVO member) throws Exception {
         memberDao.updateMember(member);
     }
-    
+
     @Override
     public boolean deleteAccount(String userId, String password) {
-        MemberVO user = memberDao.findById(userId);
+        MemberVO user = memberDao.findMemberById(userId);
         if (user != null && user.getPassword().equals(password)) {
-        	memberDao.delete(userId);
+            memberDao.delete(userId);
             return true;
         }
         return false;

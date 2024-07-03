@@ -1,7 +1,6 @@
 package kr.ac.kopo.savings.dao;
 
 import java.security.SecureRandom;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,12 +9,16 @@ public class RandomSavingsAccountNumberGenerator {
 
     private static final int RANDOM_NUMBER_LENGTH = 9;
 
-    @Autowired
-    private static SavingsAccountDAO savingsAccountDAO;
+    private final SavingsAccountDAO savingsAccountDAO;
 
-    public static String generateRandomAccountNumber(int productNumber) {
+    @Autowired
+    public RandomSavingsAccountNumberGenerator(SavingsAccountDAO savingsAccountDAO) {
+        this.savingsAccountDAO = savingsAccountDAO;
+    }
+
+    public String generateRandomAccountNumber(int productNumber) {
         SecureRandom secureRandom = new SecureRandom();
-        String accountNumber;
+        String savingsAccountNumber;
         do {
             StringBuilder sb = new StringBuilder();
 
@@ -31,9 +34,9 @@ public class RandomSavingsAccountNumberGenerator {
                 sb.append(secureRandom.nextInt(10));
             }
 
-            accountNumber = sb.toString();
-        } while (savingsAccountDAO.countBySavingsAccountNumber(accountNumber) > 0); // 중복 검사
+            savingsAccountNumber = sb.toString();
+        } while (savingsAccountDAO.countBySavingsAccountNumber(savingsAccountNumber) > 0); // 중복 검사
 
-        return accountNumber;
+        return savingsAccountNumber;
     }
 }

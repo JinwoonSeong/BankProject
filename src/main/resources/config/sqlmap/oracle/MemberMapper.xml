@@ -9,31 +9,35 @@
         FROM Customers
         WHERE customer_id = #{customer_id} AND password = #{password}
     </select>
-    
+
     <!-- 회원가입 -->
     <insert id="signUp" parameterType="memberVO">
         INSERT INTO Customers (customer_id, password, customer_name, ssn, phone_number, email, address)
         VALUES (#{customer_id}, #{password}, #{customer_name}, #{ssn}, #{phone_number}, #{email}, #{address})
     </insert>
-    
-     <select id="getMemberById" parameterType="String" resultType="memberVO">
+
+    <!-- ID로 회원 정보 가져오기 -->
+    <select id="getMemberById" parameterType="String" resultType="memberVO">
         SELECT * FROM Customers WHERE customer_id = #{id}
     </select>
-    
+
+    <!-- 회원 정보 업데이트 -->
     <update id="updateMember" parameterType="memberVO">
         UPDATE Customers
-		SET password = #{password},
-			customer_name = #{customer_name},
-		    email = #{email},
-		    phone_number = #{phone_number},
-		    address = #{address}
-		WHERE customer_id = #{customer_id}
+        SET password = #{password},
+            customer_name = #{customer_name},
+            email = #{email},
+            phone_number = #{phone_number},
+            address = #{address}
+        WHERE customer_id = #{customer_id}
     </update>
-    
+
+    <!-- 회원 ID로 회원 정보 찾기 -->
     <select id="findById" parameterType="string" resultType="memberVO">
         SELECT * FROM Customers WHERE customer_id = #{customer_id}
     </select>
 
+    <!-- 회원 삭제 -->
     <delete id="delete" parameterType="string">
         DELETE FROM Customers WHERE customer_id = #{customer_id}
     </delete>

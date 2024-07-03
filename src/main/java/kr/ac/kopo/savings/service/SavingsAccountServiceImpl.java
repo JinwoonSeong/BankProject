@@ -1,8 +1,9 @@
 package kr.ac.kopo.savings.service;
 
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,6 +21,9 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
     @Autowired
     private SavingsAccountDAO savingsAccountDAO;
 
+    @Autowired
+    private RandomSavingsAccountNumberGenerator accountNumberGenerator;
+
     @Scheduled(cron = "*/30 * * * * *")
     @Transactional
     @Override
@@ -31,7 +35,6 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
             throw new RuntimeException("적금 계좌 이자 적용 중 오류 발생: " + e.getMessage(), e);
         }
     }
-
 
     @Override
     public SavingsAccountVO savingsAccountRegister(SavingsAccountVO savingsAccount) {
@@ -135,7 +138,7 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
     public String generateUniqueSavingsAccountNumber(int productNumber) throws Exception {
         String accountNumber;
         do {
-            accountNumber = RandomSavingsAccountNumberGenerator.generateRandomAccountNumber(productNumber);
+            accountNumber = accountNumberGenerator.generateRandomAccountNumber(productNumber);
         } while (savingsAccountDAO.isAccountNumberExists(accountNumber));
         return accountNumber;
     }
@@ -147,75 +150,63 @@ public class SavingsAccountServiceImpl implements SavingsAccountService {
 
     @Override
     public int getProductNumber(String depositType) throws Exception {
+        System.out.println("Getting product number for deposit type: " + depositType);
         return savingsAccountDAO.getProductNumber(depositType);
     }
-    
+
     @Override
     public List<SavingsAccountVO> getAccountsByCustomerId(String customerId) {
         return savingsAccountDAO.getAccountsByCustomerId(customerId);
     }
-    
+
     @Override
     public List<TransactionDetailVO> getTransactionsByAccountId(String accountId) {
         return savingsAccountDAO.getTransactionsByAccountId(accountId);
     }
-    
+
     @Override
     public SavingsAccountVO getAccountById(String accountId) throws Exception {
         return savingsAccountDAO.findByAccountNum(accountId);
     }
-
     @Override
-    public boolean checkPassword(String savingsAccountNum, String password) throws Exception {
-        Map<String, Object> params = new HashMap<>();
-        params.put("savingsAccountNum", savingsAccountNum);
-        params.put("password", password);
-        int count = savingsAccountDAO.checkPassword(params);
-        return count > 0;
+    public SavingsAccountVO getAccountById2(String accountId) throws Exception {
+    	return savingsAccountDAO.findByAccountNum(accountId);
     }
-
-    @Override
-    @Transactional
-    public boolean terminateSavingsAccount(String savingsAccountNum, String password) throws Exception {
-        if (!checkPassword(savingsAccountNum, password)) {
-            return false;
-        }
-
-        SavingsAccountVO savingsAccount = savingsAccountDAO.findByAccountNum(savingsAccountNum);
-        if (savingsAccount == null || savingsAccount.getAmount() <= 0) {
-            return false;
-        }
-
-        savingsAccountDAO.delete(savingsAccountNum);
-        return true;
+    
+    
+    
+    private int generateTransactionId() {
+        Random random = new Random();
+        return random.nextInt(1000000);
     }
-
+    
     @Override
     @Transactional
-    public boolean terminateSavingsAccount(String savingsAccountNum, String password, String transferAccountNum) throws Exception {
-        if (!checkPassword(savingsAccountNum, password)) {
-            return false;
+    public void terminateSavingsAccount(String accountId, String password, String targetAccountId) throws Exception {
+        SavingsAccountVO account = getAccountById(accountId);
+        if (account != null && account.getSavings_account_password().equals(password)) {
+            // 잔액을 이체
+            savingsAccountDAO.updateAccountBalance(targetAccountId, account.getAmount());
+
+            // 거래 내역 삽입
+            TransactionDetailVO transactionHistory = new TransactionDetailVO();
+            
+            int toTransactionId = generateTransactionId();
+            transactionHistory.setTransactionId(toTransactionId);
+            transactionHistory.setAccountNum(targetAccountId);
+            transactionHistory.setAmount(account.getAmount());
+            transactionHistory.setTransactionDate(new Date());
+            transactionHistory.setToAccount(targetAccountId);
+            transactionHistory.setFromAccount(accountId);
+            transactionHistory.setDepositorName(account.getCustomer_id());
+            savingsAccountDAO.insertTransactionHistory(transactionHistory);
+
+            // 계좌 삭제
+            savingsAccountDAO.deleteAccount(accountId);
+        } else {
+            throw new IllegalArgumentException("없는 계좌 번호 거나 적금 계좌 비밀번호가 틀렸습니다.");
         }
-
-        SavingsAccountVO savingsAccount = savingsAccountDAO.findByAccountNum(savingsAccountNum);
-        if (savingsAccount == null) {
-            return false;
-        }
-
-        double amount = savingsAccount.getAmount();
-        boolean transferSuccess = savingsAccountDAO.transfer(savingsAccountNum, transferAccountNum, amount);
-        if (!transferSuccess) {
-            return false;
-        }
-
-        TransactionDetailVO transaction = new TransactionDetailVO();
-        transaction.setAccountNum(transferAccountNum);
-        transaction.setAmount(amount);
-        transaction.setTransactionDate(new java.util.Date());
-        transaction.setTransaction_type("입금");
-        savingsAccountDAO.saveTransaction(transaction);
-
-        savingsAccountDAO.delete(savingsAccountNum);
-        return true;
     }
+
+    
 }

@@ -29,9 +29,9 @@ public interface SavingsAccountService {
     int getProductNumber(String depositType) throws Exception;
     List<SavingsAccountVO> getAccountsByCustomerId(String customerId);
 	List<TransactionDetailVO> getTransactionsByAccountId(String accountId);
+	SavingsAccountVO getAccountById2(String accountId) throws Exception;
 	SavingsAccountVO getAccountById(String accountId) throws Exception;
-    boolean checkPassword(String savingsAccountNum, String password) throws Exception;
-    boolean terminateSavingsAccount(String savingsAccountNum, String password) throws Exception;
-    boolean terminateSavingsAccount(String savingsAccountNum, String password, String transferAccountNum) throws Exception;
+	void terminateSavingsAccount(String accountId, String password, String targetAccountId) throws Exception;
+    
     
 }

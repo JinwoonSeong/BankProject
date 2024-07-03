@@ -63,7 +63,12 @@
 	    )
 	    WHERE ROWNUM = 1
 	</select>
-
+    <select id="countBySavingsAccountNumber" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM installment_savings
+        WHERE savings_account_num = #{savingsAccountNumber}
+    </select>
+    
     <select id="isAccountNumberExists" parameterType="string" resultType="int">
         SELECT COUNT(*)
         FROM installment_savings
@@ -89,10 +94,10 @@
     </delete>
 
     <!-- 이체 거래 내역 삽입 -->
-    <insert id="insertTransactionHistory" parameterType="kr.ac.kopo.transactiondetail.vo.TransactionDetailVO">
+    <insert id="insertTransactionHistory" parameterType="kr.ac.kopo.savings.vo.SavingsAccountVO">
         INSERT INTO Transaction_details (
             transaction_id,
-            account_NUM,
+            account_num,
             transaction_type,
             amount,
             transaction_date,
@@ -101,18 +106,18 @@
             from_account
         ) VALUES (
             #{transactionId},
-            #{account_Num},
+            #{accountNum},
             '입금',
             #{amount},
             #{transactionDate},
-            #{depositorName},
-            #{to_Account},
-            #{from_Account}
+            #{depositorName, jdbcType=VARCHAR},
+            #{toAccount, jdbcType=VARCHAR},
+            #{fromAccount, jdbcType=VARCHAR}
         )
     </insert>
 
     <!-- 잔액 업데이트 -->
     <update id="updateAccountBalance" parameterType="map">
-        UPDATE account SET account_MONEY = account_MONEY + #{amount} WHERE account_id = #{targetAccountId}
+        UPDATE account SET account_MONEY = account_MONEY + #{amount} WHERE account_NUM = #{targetAccountId}
     </update>
 </mapper>

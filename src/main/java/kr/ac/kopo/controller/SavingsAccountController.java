@@ -66,6 +66,7 @@ public class SavingsAccountController {
 
     @PostMapping("/savingsAccountRegister")
     public String savingsAccountRegister(@ModelAttribute SavingsAccountVO savingsAccount, @RequestParam("depositType") String depositType, Model model) {
+    	System.out.println(depositType);
         try {
             if (depositType == null || depositType.isEmpty()) {
                 throw new IllegalArgumentException("Deposit type is null or empty");
@@ -214,40 +215,19 @@ public class SavingsAccountController {
     }
 
     @PostMapping("/terminate")
-    public String terminateSavingsAccount(@RequestParam("savingsAccountNum") String savingsAccountNum,
-                                          @RequestParam("password") String password,
-                                          Model model) throws Exception {
-        SavingsAccountVO account = savingsAccountService.getAccountById(savingsAccountNum);
-        if (account.getAmount() > 0) {
-            model.addAttribute("account", account);
-            return "savings/confirmTerminateSavingsAccount";
-        }
-
-        boolean isTerminated = savingsAccountService.terminateSavingsAccount(savingsAccountNum, password);
-        if (isTerminated) {
+    public String terminate(@RequestParam("accountId") String accountId,
+                            @RequestParam("password") String password,
+                            @RequestParam("targetAccountId") String targetAccountId,
+                            Model model) {
+        try {
+            savingsAccountService.terminateSavingsAccount(accountId, password, targetAccountId);
             return "savings/terminationSuccess";
-        } else {
-            model.addAttribute("error", "Invalid password");
-            model.addAttribute("account", account);
-            return "savings/terminateSavingsAccount";
+        } catch (Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "savings/terminationFailure";
         }
     }
-
-    @PostMapping("/confirmTerminate")
-    public String confirmTerminateSavingsAccount(@RequestParam("savingsAccountNum") String savingsAccountNum,
-                                                 @RequestParam("password") String password,
-                                                 @RequestParam("transferAccountNum") String transferAccountNum,
-                                                 Model model) throws Exception {
-        boolean isTerminated = savingsAccountService.terminateSavingsAccount(savingsAccountNum, password, transferAccountNum);
-        if (isTerminated) {
-            return "savings/terminationSuccess";
-        } else {
-            SavingsAccountVO account = savingsAccountService.getAccountById(savingsAccountNum);
-            model.addAttribute("error", "Invalid password or termination failed");
-            model.addAttribute("account", account);
-            return "savings/confirmTerminateSavingsAccount";
-        }
-    }
+    
     
     
     

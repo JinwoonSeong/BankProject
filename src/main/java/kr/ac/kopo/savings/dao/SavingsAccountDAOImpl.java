@@ -71,8 +71,14 @@ public class SavingsAccountDAOImpl implements SavingsAccountDAO {
 
     @Override
     public int getProductNumber(String depositType) throws Exception {
-        return sqlSession.selectOne("kr.ac.kopo.savings.dao.SavingsAccountDAO.getProductNumber", depositType);
+        System.out.println("DAO - Getting product number for deposit type: " + depositType); // 로그 추가
+        Integer productNumber = sqlSession.selectOne("kr.ac.kopo.savings.dao.SavingsAccountDAO.getProductNumber", depositType);
+        System.out.println("DAO - Product number retrieved: " + productNumber); // 로그 추가
+        return productNumber != null ? productNumber : 0; // null 체크 후 기본 값 반환
     }
+
+
+
 
     @Override
     public boolean isAccountNumberExists(String accountNumber) throws Exception {
@@ -128,11 +134,11 @@ public class SavingsAccountDAOImpl implements SavingsAccountDAO {
 
     @Override
     public void insertTransactionHistory(TransactionDetailVO transactionHistory) {
-        sqlSession.insert("kr.ac.kopo.transactiondetail.vo.TransactionDetailVO.insertTransactionHistory", transactionHistory);
+        sqlSession.insert("kr.ac.kopo.savings.dao.SavingsAccountDAO.insertTransactionHistory", transactionHistory);
     }
 
     @Override
-    public void updateAccountBalance(String targetAccountId, int amount) {
+    public void updateAccountBalance(String targetAccountId, double amount) {
         Map<String, Object> params = new HashMap<>();
         params.put("targetAccountId", targetAccountId);
         params.put("amount", amount);

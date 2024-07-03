@@ -37,7 +37,7 @@ public interface SavingsAccountDAO {
 
     void insertTransactionHistory(TransactionDetailVO transactionHistory);
 
-    void updateAccountBalance(String targetAccountId, int amount);
+    void updateAccountBalance(String targetAccountId, double amount);
 	
     
 	// 계좌번호중복방지 메소드

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>적금 해지 성공</title>
+    <title>적금 해지 실패</title>
     <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/CSS/home.css">
 </head>
 <body>
@@ -15,8 +15,8 @@
 <section class="bg-light py-5">
     <div class="container px-5 my-5">
         <div class="text-center mb-5">
-            <h1 class="fw-bolder">적금 해지 성공</h1>
-            <p class="lead fw-normal text-muted mb-0">적금 계좌가 성공적으로 해지되었습니다.</p>
+            <h1 class="fw-bolder">적금 해지 실패</h1>
+            <p class="lead fw-normal text-muted mb-0">${errorMessage}</p>
             <a href="${pageContext.request.contextPath}/savigsaccounts" class="btn btn-primary mt-4">내 적금 계좌로 돌아가기</a>
         </div>
     </div>
